@@ -14,13 +14,17 @@ Arduino Uno
 Arduino IDE 1.0.5
 
 This code is beerware; if you see me (or any other SparkFun employee) at the local, and you've found our code helpful, please buy us a round!
-Distributed as-is; no warranty is given. 
+Distributed as-is; no warranty is given.
 ******************************************************************************/
 
 #ifndef SFE_ISL29125_h
 #define SFE_ISL29125_h
 
+#ifdef ARDUINO
 #include "Wire.h"
+#else
+#include "application.h"
+#endif
 
 // ISL29125 I2C Address
 #define ISL_I2C_ADDR 0x44
@@ -34,8 +38,8 @@ Distributed as-is; no warranty is given.
 #define THRESHOLD_LH 0x05
 #define THRESHOLD_HL 0x06
 #define THRESHOLD_HH 0x07
-#define STATUS 0x08 
-#define GREEN_L 0x09 
+#define STATUS 0x08
+#define GREEN_L 0x09
 #define GREEN_H 0x0A
 #define RED_L 0x0B
 #define RED_H 0x0C
@@ -118,27 +122,27 @@ class SFE_ISL29125
   bool init();
   bool reset();
   bool config(uint8_t config1, uint8_t config2, uint8_t config3);
-  
+
   void setUpperThreshold(uint16_t data);
   void setLowerThreshold(uint16_t data);
   uint16_t readUpperThreshold();
   uint16_t readLowerThreshold();
-  
+
   uint16_t readRed();
   uint16_t readGreen();
   uint16_t readBlue();
-  
+
   uint8_t readStatus();
-  
+
  private:
   uint8_t _addr;
-  
+
   uint8_t read8(uint8_t reg);
   void write8(uint8_t reg, uint8_t data);
-  
+
   uint16_t read16(uint8_t reg);
   void write16(uint8_t reg, uint16_t data);
-  
+
 };
 
 #endif
